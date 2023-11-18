@@ -1545,7 +1545,9 @@ client_options(Transport, SSLOptions, SocketOptions) ->
     end.
 
 merge_options(A, B) ->
-    proplists:from_map(maps:merge(proplists:to_map(A), proplists:to_map(B))).
+    A1 = proplists:unfold(A),
+    B1 = proplists:unfold(B),
+    maps:to_list(maps:merge(maps:from_list(A1), maps:from_list(B1))).
 
 start_http2_server(
   Http2Settings,
